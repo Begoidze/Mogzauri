@@ -25,7 +25,7 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center gap-6 px-6 text-center text-white">
         <Image
-          src="/mogzauri-logo.jpeg"
+          src="/mogzauri-logo-transparent.png"
           alt="Mogzauri Logo"
           width={120}
           height={120}

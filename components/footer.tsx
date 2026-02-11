@@ -14,7 +14,7 @@ export function Footer() {
           <div className="max-w-sm">
             <div className="flex items-center gap-3">
               <Image
-                src="/mogzauri-logo.jpeg"
+                src="/mogzauri-logo-transparent.png"
                 alt="Mogzauri"
                 width={40}
                 height={40}

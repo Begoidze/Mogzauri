@@ -43,14 +43,11 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
           <Image
-            src="/placeholder-logo.svg"
+            src="/mogzauri-logo.jpeg"
             alt="Mogzauri Wine Cellar"
             width={44}
             height={44}
-            className={cn(
-              "transition-all duration-300",
-              scrolled || !isHome ? "" : "brightness-0 invert"
-            )}
+            className="object-contain transition-all duration-300"
           />
           <span
             className={cn(

@@ -25,11 +25,11 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center gap-6 px-6 text-center text-white">
         <Image
-          src="/placeholder-logo.svg"
+          src="/mogzauri-logo.jpeg"
           alt="Mogzauri Logo"
           width={120}
           height={120}
-          className="brightness-0 invert"
+          className="object-contain"
           priority
         />
 

@@ -14,11 +14,11 @@ export function Footer() {
           <div className="max-w-sm">
             <div className="flex items-center gap-3">
               <Image
-                src="/placeholder-logo.svg"
+                src="/mogzauri-logo.jpeg"
                 alt="Mogzauri"
                 width={40}
                 height={40}
-                className="brightness-0 invert"
+                className="object-contain"
               />
               <span className="font-serif text-lg font-semibold tracking-wider">
                 MOGZAURI

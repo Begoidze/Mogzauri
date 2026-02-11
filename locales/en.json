@@ -1,0 +1,156 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "wines": "Wines",
+    "shop": "Shop",
+    "visit": "Visit",
+    "contact": "Contact"
+  },
+  "hero": {
+    "subtitle": "Wine Cellar",
+    "estd": "ESTD 2023",
+    "scroll": "Scroll to explore"
+  },
+  "home": {
+    "introTitle": "A Legacy Born in Georgian Soil",
+    "introText": "Nestled in the heart of Georgia's ancient winemaking region, Mogzauri Wine Cellar carries forward an 8,000-year tradition of viticulture. Our wines are crafted with reverence for the land, the vine, and the timeless art of Georgian winemaking.",
+    "philosophyTitle": "Where Tradition Meets Excellence",
+    "philosophyText": "Every bottle of Mogzauri tells a story of sun-drenched vineyards, hand-harvested grapes, and the patient alchemy of fermentation in traditional qvevri vessels. We believe great wine is not merely made — it is cultivated, nurtured, and ultimately revealed.",
+    "exploreWines": "Explore Wines",
+    "visitUs": "Visit Us"
+  },
+  "about": {
+    "pageTitle": "Our Story",
+    "pageSubtitle": "A journey through centuries of Georgian winemaking tradition",
+    "storyTitle": "The Mogzauri Heritage",
+    "storyText": "Founded in 2023, Mogzauri Wine Cellar draws upon millennia of Georgian winemaking wisdom. The name \"Mogzauri\" — meaning \"traveler\" in Georgian — reflects our journey to bring the world's oldest wine tradition to modern connoisseurs. Our estate sits upon some of Georgia's most prized terroir, where the unique combination of climate, altitude, and soil composition creates wines of extraordinary character.",
+    "philosophyTitle": "Our Philosophy",
+    "philosophyText": "We embrace the ancient Georgian method of fermenting wine in qvevri — large clay vessels buried in the earth. This UNESCO-recognized technique allows the wine to develop complex flavors through natural temperature regulation and gentle oxidation. Every step of our process honors the land and the legacy it carries.",
+    "vineyardTitle": "The Vineyard",
+    "vineyardText": "Our vineyards span across carefully selected plots, each chosen for its unique microclimate and soil profile. We cultivate indigenous Georgian grape varieties — Saperavi, Rkatsiteli, and Kisi — alongside select international cultivars, creating wines that are distinctly Georgian yet universally celebrated.",
+    "craftTitle": "Craft & Tradition",
+    "craftText": "From hand-harvesting at optimal ripeness to aging in Georgian oak and qvevri, every decision reflects our commitment to uncompromising quality. Our winemaker combines generations of knowledge with modern precision, ensuring each vintage expresses the true essence of its origin."
+  },
+  "wines": {
+    "pageTitle": "Our Wines",
+    "pageSubtitle": "Discover the essence of Georgian winemaking",
+    "learnMore": "Learn More",
+    "collection": [
+      {
+        "name": "Wine wine wine",
+        "year": "2023",
+        "description": "Description Description Description Description Description Description",
+        "price": "XX"
+      },
+      {
+        "name": "Wine wine wine",
+        "year": "2023",
+        "description": "Description Description Description Description Description Description",
+        "price": "XX"
+      },
+      {
+        "name": "Wine wine wine",
+        "year": "2023",
+        "description": "Description Description Description Description Description Description",
+        "price": "XX"
+      },
+      {
+        "name": "Wine wine wine",
+        "year": "2023",
+        "description": "Description Description Description Description Description Description",
+        "price": "XX"
+      },
+      {
+        "name": "Wine wine wine",
+        "year": "2023",
+        "description": "Description Description Description Description Description Description",
+        "price": "XX"
+      },
+      {
+        "name": "Wine wine wine",
+        "year": "2023",
+        "description": "Description Description Description Description Description Description",
+        "price": "XX"
+      }
+    ]
+  },
+  "shop": {
+    "pageTitle": "Shop",
+    "pageSubtitle": "Bring the taste of Georgia to your table",
+    "addToCart": "Coming Soon",
+    "products": [
+      {
+        "name": "Wine wine wine 2023",
+        "description": "Description Description Description Description Description Description",
+        "price": "$XX"
+      },
+      {
+        "name": "Wine wine wine 2023",
+        "description": "Description Description Description Description Description Description",
+        "price": "$XX"
+      },
+      {
+        "name": "Wine wine wine 2023",
+        "description": "Description Description Description Description Description Description",
+        "price": "$XX"
+      },
+      {
+        "name": "Wine wine wine 2023",
+        "description": "Description Description Description Description Description Description",
+        "price": "$XX"
+      },
+      {
+        "name": "Wine wine wine 2023",
+        "description": "Description Description Description Description Description Description",
+        "price": "$XX"
+      },
+      {
+        "name": "Wine wine wine 2023",
+        "description": "Description Description Description Description Description Description",
+        "price": "$XX"
+      }
+    ]
+  },
+  "visit": {
+    "pageTitle": "Visit Us",
+    "pageSubtitle": "Experience the beauty of Georgian winemaking firsthand",
+    "descriptionTitle": "Welcome to Mogzauri",
+    "descriptionText": "Step into a world where ancient tradition meets modern hospitality. Our estate offers an immersive experience into the heart of Georgian winemaking, surrounded by breathtaking vineyard landscapes and the warm spirit of Caucasian culture.",
+    "tastingTitle": "Tasting Experience",
+    "tastingText": "Join our guided tasting sessions where you will explore our full collection alongside traditional Georgian dishes. Our sommelier will guide you through the unique characteristics of each wine, sharing stories of the land and the craft behind every bottle.",
+    "hoursTitle": "Opening Hours",
+    "hours": {
+      "monFri": "Monday – Friday: 10:00 – 18:00",
+      "sat": "Saturday: 11:00 – 17:00",
+      "sun": "Sunday: By Appointment Only"
+    },
+    "addressTitle": "Location",
+    "address": "Kakheti Region, Georgia",
+    "addressLine2": "Tsinandali Valley",
+    "reservation": "Book a Reservation"
+  },
+  "contact": {
+    "pageTitle": "Contact",
+    "pageSubtitle": "We would love to hear from you",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your full name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "your@email.com",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Tell us how we can help...",
+    "send": "Send Message",
+    "info": "Get in Touch",
+    "phone": "+995 555 123 456",
+    "email": "info@mogzauri.ge",
+    "addressLabel": "Address",
+    "address": "Kakheti Region, Tsinandali Valley, Georgia"
+  },
+  "footer": {
+    "tagline": "Crafting exceptional wines in the heart of Georgia since 2023.",
+    "quickLinks": "Quick Links",
+    "contactUs": "Contact Us",
+    "followUs": "Follow Us",
+    "rights": "All rights reserved."
+  }
+}

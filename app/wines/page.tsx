@@ -22,7 +22,6 @@ export default function WinesPage() {
         <PageHeader
           title={t("wines.pageTitle") as string}
           subtitle={t("wines.pageSubtitle") as string}
-          backgroundImage="/placeholder.svg"
         />
 
         <section className="mx-auto max-w-7xl px-6 py-24">

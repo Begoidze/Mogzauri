@@ -10,6 +10,7 @@ import { PageHeader } from "@/components/page-header"
 export default function VisitPage() {
   const { t } = useI18n()
   const hours = t("visit.hours") as { monFri: string; sat: string; sun: string }
+  const addressLine2 = t("visit.addressLine2") as string
 
   return (
     <>
@@ -18,7 +19,6 @@ export default function VisitPage() {
         <PageHeader
           title={t("visit.pageTitle") as string}
           subtitle={t("visit.pageSubtitle") as string}
-          backgroundImage="/placeholder.svg"
         />
 
         {/* Description */}
@@ -97,7 +97,9 @@ export default function VisitPage() {
               </div>
               <div className="flex flex-col gap-2 border-l-2 border-accent pl-6">
                 <p className="text-base text-muted-foreground">{t("visit.address") as string}</p>
-                <p className="text-base text-muted-foreground">{t("visit.addressLine2") as string}</p>
+                {addressLine2 ? (
+                  <p className="text-base text-muted-foreground">{addressLine2}</p>
+                ) : null}
               </div>
 
               {/* Map placeholder */}

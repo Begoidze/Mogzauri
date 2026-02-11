@@ -16,7 +16,6 @@ export default function ContactPage() {
         <PageHeader
           title={t("contact.pageTitle") as string}
           subtitle={t("contact.pageSubtitle") as string}
-          backgroundImage="/placeholder.svg"
         />
 
         <section className="mx-auto max-w-6xl px-6 py-24">

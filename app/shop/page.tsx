@@ -21,7 +21,6 @@ export default function ShopPage() {
         <PageHeader
           title={t("shop.pageTitle") as string}
           subtitle={t("shop.pageSubtitle") as string}
-          backgroundImage="/placeholder.svg"
         />
 
         <section className="mx-auto max-w-7xl px-6 py-24">

@@ -16,7 +16,6 @@ export default function AboutPage() {
         <PageHeader
           title={t("about.pageTitle") as string}
           subtitle={t("about.pageSubtitle") as string}
-          backgroundImage="/placeholder.svg"
         />
 
         {/* Story Section */}

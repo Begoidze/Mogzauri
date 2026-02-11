@@ -3,23 +3,11 @@
 interface PageHeaderProps {
   title: string
   subtitle: string
-  backgroundImage?: string
 }
 
-export function PageHeader({ title, subtitle, backgroundImage }: PageHeaderProps) {
+export function PageHeader({ title, subtitle }: PageHeaderProps) {
   return (
-    <section
-      className="relative flex min-h-[50vh] items-center justify-center overflow-hidden bg-primary"
-      style={
-        backgroundImage
-          ? {
-              backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${backgroundImage})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }
-          : undefined
-      }
-    >
+    <section className="relative flex min-h-[40vh] items-center justify-center overflow-hidden bg-primary">
       <div className="relative z-10 flex flex-col items-center gap-4 px-6 pt-20 pb-12 text-center">
         <h1 className="font-serif text-4xl font-bold tracking-wide text-primary-foreground sm:text-5xl md:text-6xl text-balance">
           {title}

@@ -31,7 +31,7 @@ export default function AboutPage() {
             </div>
             <div className="relative aspect-[4/5] w-full flex-1 overflow-hidden">
               <Image
-                src="/placeholder.svg"
+                src="/aboutus1.jpeg"
                 alt="Mogzauri wine collection"
                 fill
                 className="object-cover"
@@ -79,7 +79,7 @@ export default function AboutPage() {
             </div>
             <div className="relative aspect-[4/5] w-full flex-1 overflow-hidden">
               <Image
-                src="/placeholder.svg"
+                src="/aboutus2.jpeg"
                 alt="Wine glass at sunset"
                 fill
                 className="object-cover"

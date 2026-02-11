@@ -11,7 +11,7 @@ export function HeroSection() {
     <section className="relative flex h-screen items-center justify-center overflow-hidden">
       {/* Background image */}
       <Image
-        src="/placeholder.svg"
+        src="/home1.jpeg"
         alt="Hand holding a glass of red wine against a sunset over rolling green fields"
         fill
         priority

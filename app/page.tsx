@@ -29,7 +29,7 @@ export default function HomePage() {
         {/* Cinematic Image Section */}
         <section className="relative h-[60vh] overflow-hidden">
           <Image
-            src="/placeholder.svg"
+            src="/home2.jpeg"
             alt="Mogzauri wine collection"
             fill
             className="object-cover"

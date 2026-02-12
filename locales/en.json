@@ -29,8 +29,8 @@
     "philosophyText": "",
     "vineyardTitle": "The Vineyard",
     "vineyardText": "Our wines are born in the village of Arkhiloskalo, where our vineyards of Rkatsiteli, Kisi, Pink Rkatsiteli, and Saperavi are cultivated. This allows us to maintain complete and continuous quality control from vine to bottle. Special care and love for the vineyards create wines with unique character and distinct individuality.",
-    "craftTitle": "Craft & Tradition",
-    "craftText": "From hand-harvesting at optimal ripeness to aging in Georgian oak and qvevri, every decision reflects our commitment to uncompromising quality. Our winemaker combines generations of knowledge with modern precision, ensuring each vintage expresses the true essence of its origin."
+    "craftTitle": "",
+    "craftText": ""
   },
   "wines": {
     "pageTitle": "Our Wines",

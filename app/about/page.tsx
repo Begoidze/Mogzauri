@@ -64,17 +64,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Craft Section */}
-        <section className="bg-primary text-primary-foreground">
-          <div className="mx-auto max-w-4xl px-6 py-24 text-center">
-            <h2 className="font-serif text-3xl font-semibold text-balance">
-              {t("about.craftTitle") as string}
-            </h2>
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed opacity-80">
-              {t("about.craftText") as string}
-            </p>
-          </div>
-        </section>
       </main>
       <Footer />
     </>

@@ -41,31 +41,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Philosophy Section */}
-        <section className="bg-secondary">
-          <div className="mx-auto max-w-6xl px-6 py-24">
-            <div className="flex flex-col-reverse items-center gap-12 md:flex-row">
-              <div className="relative aspect-[4/5] w-full flex-1 overflow-hidden">
-                <Image
-                  src="/placeholder.svg"
-                  alt="Wine production"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
-              <div className="flex-1">
-                <h2 className="font-serif text-3xl font-semibold text-foreground text-balance">
-                  {t("about.philosophyTitle") as string}
-                </h2>
-                <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-                  {t("about.philosophyText") as string}
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Vineyard Section */}
         <section className="mx-auto max-w-6xl px-6 py-24">
           <div className="flex flex-col items-center gap-12 md:flex-row">

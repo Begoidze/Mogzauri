@@ -32,7 +32,7 @@ export default function ShopPage() {
                   name={product.name}
                   description={product.description}
                   price={product.price}
-                  image="/rose.jfif"
+                  image="/rose.jpg"
                 />
               ))}
           </div>

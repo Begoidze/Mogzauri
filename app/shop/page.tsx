@@ -18,7 +18,7 @@ export default function ShopPage() {
     "/firstImage.jpeg",
     "/wines/wine2.jpeg",
     "/thirdImage.jpeg",
-    "/wines/wine4.jpeg",
+    "/fourthImage.jpeg",
     "/roseLast.jpeg",
   ]
 

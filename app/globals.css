@@ -44,6 +44,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    cursor: url('/wine_cursor.png') 10 50, auto;
   }
   html {
     scroll-behavior: smooth;

@@ -38,6 +38,8 @@ export function Cursor() {
       // calculate rotation based on movement direction
       if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
         rotationRef.current = Math.atan2(dy, dx) * 180 / Math.PI
+        // Prevent upside down rotation
+        rotationRef.current = Math.max(-90, Math.min(90, rotationRef.current))
       }
 
       requestAnimationFrame(animate)

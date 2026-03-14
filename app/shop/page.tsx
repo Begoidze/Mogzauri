@@ -14,6 +14,14 @@ export default function ShopPage() {
     price: string
   }>
 
+  const productImages = [
+    "/rose.jpg",
+    "/wines/wine2.jpeg",
+    "/wines/wine3.jpeg",
+    "/wines/wine4.jpeg",
+    "/roseLast.jpeg",
+  ]
+
   return (
     <>
       <Navbar />
@@ -32,7 +40,7 @@ export default function ShopPage() {
                   name={product.name}
                   description={product.description}
                   price={product.price}
-                  image="/rose.jpg"
+                  image={productImages[i] ?? "/placeholder.svg"}
                 />
               ))}
           </div>

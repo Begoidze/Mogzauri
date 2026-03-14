@@ -15,9 +15,9 @@ export default function ShopPage() {
   }>
 
   const productImages = [
-    "/rose.jpg",
+    "/firstImage.jpeg",
     "/wines/wine2.jpeg",
-    "/wines/wine3.jpeg",
+    "/thirdImage.jpeg",
     "/wines/wine4.jpeg",
     "/roseLast.jpeg",
   ]

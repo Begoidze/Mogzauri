@@ -7,7 +7,8 @@ export function Cursor() {
   const cursorRef = useRef<HTMLDivElement>(null)
   const targetRef = useRef({ x: 0, y: 0 })
   const currentRef = useRef({ x: 0, y: 0 })
-  const rotationRef = useRef(0)
+  const targetRotationRef = useRef(0)
+  const currentRotationRef = useRef(0)
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -31,15 +32,18 @@ export function Cursor() {
       currentRef.current.x += dx * 0.15 // easing factor for smooth trailing
       currentRef.current.y += dy * 0.15
 
-      if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate(${currentRef.current.x - 16}px, ${currentRef.current.y - 16}px) rotate(${rotationRef.current}deg) scale(${isHovering ? 1.2 : 1})`
+      // Calculate target rotation
+      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+        targetRotationRef.current = (Math.atan2(dy, dx) * 180 / Math.PI) * 0.3
+        targetRotationRef.current = Math.max(-30, Math.min(30, targetRotationRef.current))
       }
 
-      // calculate rotation based on movement direction
-      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
-        rotationRef.current = (Math.atan2(dy, dx) * 180 / Math.PI) * 0.3 // Reduce rotation intensity
-        // Prevent upside down and limit tilt
-        rotationRef.current = Math.max(-30, Math.min(30, rotationRef.current))
+      // Smooth rotation easing
+      const rotationDiff = targetRotationRef.current - currentRotationRef.current
+      currentRotationRef.current += rotationDiff * 0.1
+
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate(${currentRef.current.x - 16}px, ${currentRef.current.y - 16}px) rotate(${currentRotationRef.current}deg) scale(${isHovering ? 1.2 : 1})`
       }
 
       requestAnimationFrame(animate)

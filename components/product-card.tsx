@@ -7,16 +7,17 @@ interface ProductCardProps {
   name: string
   description: string
   price: string
+  image?: string
 }
 
-export function ProductCard({ name, description, price }: ProductCardProps) {
+export function ProductCard({ name, description, price, image = "/placeholder.svg" }: ProductCardProps) {
   const { t } = useI18n()
 
   return (
     <div className="group flex flex-col overflow-hidden border border-border bg-background transition-shadow duration-300 hover:shadow-lg">
       <div className="relative aspect-square overflow-hidden bg-secondary">
         <Image
-          src="/placeholder.svg"
+          src={image}
           alt={name}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"

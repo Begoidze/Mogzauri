@@ -20,6 +20,20 @@ const authPlugin: FastifyPluginAsync = async (app) => {
     try {
       await request.jwtVerify()
       const tokenPayload = request.user as JwtUser
+      const session = await prisma.authSession.findFirst({
+        where: {
+          id: tokenPayload.sessionId,
+          userId: tokenPayload.id,
+          revokedAt: null,
+          expiresAt: { gt: new Date() },
+        },
+        select: { id: true },
+      })
+
+      if (!session) {
+        return sendError(reply, 401, "Authentication required")
+      }
+
       const user = await prisma.user.findUnique({
         where: { id: tokenPayload.id },
         select: userSelect,

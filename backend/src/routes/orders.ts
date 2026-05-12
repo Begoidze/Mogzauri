@@ -2,7 +2,14 @@ import type { FastifyPluginAsync } from "fastify"
 import Stripe from "stripe"
 import { ZodError, z } from "zod"
 import { prisma } from "../lib/prisma"
-import { parseInput, sendError, validationMessage } from "../lib/http"
+import {
+  parseInput,
+  publicErrorMessage,
+  publicErrorStatus,
+  PublicError,
+  sendError,
+  validationMessage,
+} from "../lib/http"
 
 const orderParamsSchema = z.object({
   id: z.string().min(1, "Order id is required"),
@@ -12,6 +19,10 @@ const createOrderSchema = z.object({
   shippingName: z.string().trim().min(2, "Shipping name is required"),
   shippingPhone: z.string().trim().min(5, "Shipping phone is required"),
   shippingAddress: z.string().trim().min(3, "Shipping address is required"),
+  ageConfirmed: z.boolean().refine((value) => value, {
+    message: "You must confirm that you are old enough to buy alcohol",
+  }),
+  idempotencyKey: z.string().trim().min(16, "Idempotency key is required").max(128).optional(),
 })
 
 function getStripeClient() {
@@ -42,6 +53,31 @@ const orderRoutes: FastifyPluginAsync = async (app) => {
       }
 
       const body = parseInput(createOrderSchema, request.body)
+      const idempotencyHeader = request.headers["idempotency-key"]
+      const idempotencyKey = typeof idempotencyHeader === "string"
+        ? idempotencyHeader.trim()
+        : body.idempotencyKey
+
+      if (!idempotencyKey) {
+        return sendError(reply, 400, "Idempotency key is required")
+      }
+
+      const existingOrder = await prisma.order.findFirst({
+        where: { userId: request.user.id, idempotencyKey },
+        include: orderInclude,
+      })
+
+      if (existingOrder) {
+        const existingPaymentIntent = existingOrder.stripePaymentId
+          ? await stripe.paymentIntents.retrieve(existingOrder.stripePaymentId)
+          : null
+
+        return reply.status(200).send({
+          order: existingOrder,
+          clientSecret: existingPaymentIntent?.client_secret ?? null,
+        })
+      }
+
       const cartItems = await prisma.cartItem.findMany({
         where: { userId: request.user.id },
         include: { product: true },
@@ -49,20 +85,31 @@ const orderRoutes: FastifyPluginAsync = async (app) => {
       })
 
       if (cartItems.length === 0) {
-        return sendError(reply, 400, "Cart is empty")
+        throw new PublicError("Cart is empty", 400)
       }
 
       const inactiveItem = cartItems.find((item) => !item.product.active)
       if (inactiveItem) {
-        return sendError(reply, 409, `${inactiveItem.product.name} is no longer available`)
+        throw new PublicError(`${inactiveItem.product.name} is no longer available`, 409)
       }
 
       const outOfStockItem = cartItems.find((item) => item.quantity > item.product.stock)
       if (outOfStockItem) {
-        return sendError(reply, 409, `${outOfStockItem.product.name} does not have enough stock`)
+        throw new PublicError(`${outOfStockItem.product.name} does not have enough stock`, 409)
       }
 
       const total = cartItems.reduce((sum, item) => sum + item.quantity * item.product.price, 0)
+
+      // Create PaymentIntent BEFORE mutating the database.
+      // If Stripe fails here, no stock is decremented and no order is created.
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: total,
+        currency: process.env.STRIPE_CURRENCY ?? "gel",
+        metadata: { userId: request.user.id, idempotencyKey },
+        automatic_payment_methods: { enabled: true },
+      }, {
+        idempotencyKey: `order:${request.user.id}:${idempotencyKey}`,
+      })
 
       const order = await prisma.$transaction(async (tx) => {
         for (const item of cartItems) {
@@ -78,7 +125,7 @@ const orderRoutes: FastifyPluginAsync = async (app) => {
           })
 
           if (stockUpdate.count !== 1) {
-            throw new Error(`${item.product.name} does not have enough stock`)
+            throw new PublicError(`${item.product.name} does not have enough stock`, 409)
           }
         }
 
@@ -86,6 +133,9 @@ const orderRoutes: FastifyPluginAsync = async (app) => {
           data: {
             userId: request.user.id,
             total,
+            stripePaymentId: paymentIntent.id,
+            idempotencyKey,
+            ageConfirmed: body.ageConfirmed,
             shippingName: body.shippingName,
             shippingPhone: body.shippingPhone,
             shippingAddress: body.shippingAddress,
@@ -107,31 +157,13 @@ const orderRoutes: FastifyPluginAsync = async (app) => {
         return createdOrder
       })
 
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount: order.total,
-        currency: process.env.STRIPE_CURRENCY ?? "gel",
-        metadata: {
-          orderId: order.id,
-          userId: request.user.id,
-        },
-        automatic_payment_methods: { enabled: true },
-      })
-
-      const updatedOrder = await prisma.order.update({
-        where: { id: order.id },
-        data: { stripePaymentId: paymentIntent.id },
-        include: orderInclude,
-      })
-
-      return reply.status(201).send({ order: updatedOrder, paymentIntent })
+      return reply.status(201).send({ order, clientSecret: paymentIntent.client_secret })
     } catch (error) {
       request.log.error({ err: error }, "Create order failed")
       const message = error instanceof ZodError
         ? validationMessage(error)
-        : error instanceof Error
-          ? error.message
-          : validationMessage(error)
-      return sendError(reply, 400, message)
+        : publicErrorMessage(error, "Unable to create order")
+      return sendError(reply, publicErrorStatus(error), message)
     }
   })
 

@@ -39,6 +39,10 @@ export function Footer() {
                 { href: "/wines", label: t("nav.wines") as string },
                 { href: "/shop", label: t("nav.shop") as string },
                 { href: "/visit", label: t("nav.visit") as string },
+                { href: "/terms", label: t("policies.terms.title") as string },
+                { href: "/privacy", label: t("policies.privacy.title") as string },
+                { href: "/shipping", label: t("policies.shipping.title") as string },
+                { href: "/refund", label: t("policies.refund.title") as string },
               ].map((link) => (
                 <Link
                   key={link.href}

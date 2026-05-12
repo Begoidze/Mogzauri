@@ -11,6 +11,7 @@ import { Footer } from "@/components/footer"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useAuth } from "@/lib/auth-context"
 import { useI18n } from "@/lib/i18n-context"
+import { Turnstile } from "@/components/turnstile"
 
 function buildLoginSchema(t: (key: string) => unknown) {
   return z.object({
@@ -29,6 +30,7 @@ export default function LoginPage() {
   const { login } = useAuth()
   const { t } = useI18n()
   const [formError, setFormError] = useState<string | null>(null)
+  const [captchaToken, setCaptchaToken] = useState<string | undefined>()
   const {
     register,
     handleSubmit,
@@ -40,7 +42,7 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginForm) => {
     setFormError(null)
     try {
-      await login(data.email, data.password)
+      await login(data.email, data.password, captchaToken)
       router.push("/")
     } catch (error) {
       setFormError(error instanceof Error ? error.message : (t("auth.login.error") as string))
@@ -86,6 +88,12 @@ export default function LoginPage() {
           </label>
 
           {formError && <p className="text-sm text-red-500">{formError}</p>}
+
+          <Turnstile
+            action="login"
+            onVerify={setCaptchaToken}
+            onExpire={() => setCaptchaToken(undefined)}
+          />
 
           {isSubmitting ? (
             <Skeleton className="h-11 w-full rounded-none" />

@@ -12,19 +12,25 @@ import cartRoutes from "./routes/cart"
 import ordersRoutes from "./routes/orders"
 import contactRoutes from "./routes/contact"
 
-const app = Fastify({ logger: true })
+const app = Fastify({ logger: true, trustProxy: true })
+const frontendUrl = process.env.FRONTEND_URL ?? "https://mogzauri.vercel.app"
+const jwtSecret = process.env.JWT_SECRET
+
+if (!jwtSecret || jwtSecret === "change-this-to-a-long-random-secret-before-production") {
+  throw new Error("JWT_SECRET must be set to a strong production secret")
+}
 
 app.register(helmet)
 
 app.register(cors, {
-  origin: process.env.FRONTEND_URL ?? "https://mogzauri.vercel.app",
+  origin: frontendUrl,
   credentials: true,
 })
 
 app.register(cookie)
 
 app.register(jwt, {
-  secret: process.env.JWT_SECRET!,
+  secret: jwtSecret,
   cookie: {
     cookieName: "mogzauri_token",
     signed: false,
@@ -37,6 +43,15 @@ app.register(rateLimit, {
 })
 
 app.register(authPlugin)
+
+app.addHook("preHandler", async (request, reply) => {
+  if (["GET", "HEAD", "OPTIONS"].includes(request.method)) return
+
+  const origin = request.headers.origin
+  if (origin && origin !== frontendUrl) {
+    return reply.status(403).send({ error: "Request origin is not allowed" })
+  }
+})
 
 app.setErrorHandler((error, request, reply) => {
   request.log.error({ err: error }, "Unhandled request error")

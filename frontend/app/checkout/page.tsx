@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -16,6 +16,9 @@ function buildShippingSchema(t: (key: string) => unknown) {
     shippingName: z.string().trim().min(2, t("checkout.validation.nameRequired") as string),
     shippingPhone: z.string().trim().min(5, t("checkout.validation.phoneRequired") as string),
     shippingAddress: z.string().trim().min(3, t("checkout.validation.addressRequired") as string),
+    ageConfirmed: z.boolean().refine((value) => value, {
+      message: t("checkout.validation.ageRequired") as string,
+    }),
   })
 }
 
@@ -23,6 +26,7 @@ type ShippingForm = {
   shippingName: string
   shippingPhone: string
   shippingAddress: string
+  ageConfirmed: boolean
 }
 
 const fields: Array<{ name: keyof ShippingForm; labelKey: string }> = [
@@ -49,6 +53,11 @@ export default function CheckoutPage() {
   const router = useRouter()
   const { user, isLoading } = useAuth()
   const { t } = useI18n()
+  const idempotencyKeyRef = useRef<string>(
+    typeof crypto !== "undefined" && "randomUUID" in crypto
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+  )
   const [formError, setFormError] = useState<string | null>(null)
   const {
     register,
@@ -72,6 +81,7 @@ export default function CheckoutPage() {
       shippingName: user.name,
       shippingPhone: user.phone,
       shippingAddress: user.address ?? "",
+      ageConfirmed: false,
     })
   }, [reset, user])
 
@@ -81,8 +91,14 @@ export default function CheckoutPage() {
       const response = await fetch(`${API_URL}/orders`, {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+          "Idempotency-Key": idempotencyKeyRef.current,
+        },
+        body: JSON.stringify({
+          ...data,
+          idempotencyKey: idempotencyKeyRef.current,
+        }),
       })
 
       if (!response.ok) {
@@ -132,6 +148,19 @@ export default function CheckoutPage() {
                 )}
               </label>
             ))}
+
+            <label className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground sm:col-span-2">
+              <input
+                {...register("ageConfirmed")}
+                type="checkbox"
+                className="mt-1 h-4 w-4 shrink-0 accent-foreground"
+                aria-invalid={!!errors.ageConfirmed}
+              />
+              <span>{t("checkout.ageConfirmation") as string}</span>
+            </label>
+            {errors.ageConfirmed && (
+              <p className="text-sm text-red-500 sm:col-span-2">{errors.ageConfirmed.message}</p>
+            )}
 
             {formError && <p className="text-sm text-red-500 sm:col-span-2">{formError}</p>}
 

@@ -29,6 +29,7 @@ export interface RegisterInput {
   phone: string
   password: string
   address?: string
+  captchaToken?: string
 }
 
 export type ProfileInput = Partial<
@@ -38,7 +39,7 @@ export type ProfileInput = Partial<
 interface AuthContextValue {
   user: CurrentUser | null
   isLoading: boolean
-  login: (email: string, password: string) => Promise<CurrentUser>
+  login: (email: string, password: string, captchaToken?: string) => Promise<CurrentUser>
   register: (data: RegisterInput) => Promise<CurrentUser>
   logout: () => Promise<void>
   updateProfile: (data: ProfileInput) => Promise<CurrentUser>
@@ -90,10 +91,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     void refreshUser()
   }, [refreshUser])
 
-  const login = useCallback(async (email: string, password: string) => {
+  const login = useCallback(async (email: string, password: string, captchaToken?: string) => {
     const payload = await apiRequest<{ user: CurrentUser }>("/auth/login", {
       method: "POST",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, captchaToken }),
     })
     setUser(payload.user)
     return payload.user

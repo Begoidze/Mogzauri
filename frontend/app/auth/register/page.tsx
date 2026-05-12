@@ -11,6 +11,7 @@ import { Footer } from "@/components/footer"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useAuth } from "@/lib/auth-context"
 import { useI18n } from "@/lib/i18n-context"
+import { Turnstile } from "@/components/turnstile"
 
 const optionalText = z.string().trim().optional()
 
@@ -45,6 +46,7 @@ export default function RegisterPage() {
   const { register: registerUser } = useAuth()
   const { t } = useI18n()
   const [formError, setFormError] = useState<string | null>(null)
+  const [captchaToken, setCaptchaToken] = useState<string | undefined>()
   const {
     register,
     handleSubmit,
@@ -56,7 +58,7 @@ export default function RegisterPage() {
   const onSubmit = async (data: RegisterForm) => {
     setFormError(null)
     try {
-      await registerUser(data)
+      await registerUser({ ...data, captchaToken })
       router.push("/")
     } catch (error) {
       setFormError(error instanceof Error ? error.message : (t("auth.register.error") as string))
@@ -98,6 +100,14 @@ export default function RegisterPage() {
           ))}
 
           {formError && <p className="text-sm text-red-500 sm:col-span-2">{formError}</p>}
+
+          <div className="sm:col-span-2">
+            <Turnstile
+              action="register"
+              onVerify={setCaptchaToken}
+              onExpire={() => setCaptchaToken(undefined)}
+            />
+          </div>
 
           <div className="sm:col-span-2">
             {isSubmitting ? (

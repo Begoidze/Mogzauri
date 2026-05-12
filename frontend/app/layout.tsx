@@ -5,6 +5,7 @@ import { cookies } from "next/headers"
 import { I18nProvider } from "@/lib/i18n-context"
 import { AuthProvider } from "@/lib/auth-context"
 import { Cursor } from "@/components/cursor"
+import { AgeGate } from "@/components/age-gate"
 import "./globals.css"
 
 const inter = Inter({
@@ -41,7 +42,10 @@ export default async function RootLayout({
     <html lang={lang} className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans antialiased">
         <I18nProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            {children}
+            <AgeGate />
+          </AuthProvider>
         </I18nProvider>
         <Cursor />
       </body>

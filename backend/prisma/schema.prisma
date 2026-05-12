@@ -7,14 +7,20 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  name      String
-  role      Role     @default(CUSTOMER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  orders    Order[]
+  id         String     @id @default(cuid())
+  email      String     @unique
+  password   String
+  name       String
+  phone      String
+  address    String?
+  city       String?
+  country    String?
+  postalCode String?
+  role       Role       @default(CUSTOMER)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  orders     Order[]
+  cartItems  CartItem[]
 }
 
 enum Role {
@@ -35,18 +41,37 @@ model Product {
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
   orderItems    OrderItem[]
+  cartItems     CartItem[]
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
 }
 
 model Order {
-  id              String      @id @default(cuid())
-  userId          String
-  user            User        @relation(fields: [userId], references: [id])
-  status          OrderStatus @default(PENDING)
-  total           Int
-  stripePaymentId String?
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-  items           OrderItem[]
+  id                 String      @id @default(cuid())
+  userId             String
+  user               User        @relation(fields: [userId], references: [id])
+  status             OrderStatus @default(PENDING)
+  total              Int
+  stripePaymentId    String?
+  shippingName       String
+  shippingPhone      String
+  shippingAddress    String
+  shippingCity       String
+  shippingCountry    String
+  shippingPostalCode String
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  items              OrderItem[]
 }
 
 enum OrderStatus {
@@ -66,4 +91,14 @@ model OrderItem {
   product   Product @relation(fields: [productId], references: [id])
   quantity  Int
   price     Int
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
 }

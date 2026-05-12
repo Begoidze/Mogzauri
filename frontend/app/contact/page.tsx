@@ -8,6 +8,7 @@ import { useI18n } from "@/lib/i18n-context"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { PageHeader } from "@/components/page-header"
+import { API_URL } from "@/lib/auth-context"
 
 function buildSchema(t: (key: string) => unknown) {
   return z.object({
@@ -35,8 +36,17 @@ export default function ContactPage() {
     resolver: zodResolver(buildSchema(t)),
   })
 
-  const onSubmit = async (_data: ContactFormData) => {
-    // TODO: POST to /api/contact once the API is ready
+  const onSubmit = async (data: ContactFormData) => {
+    const response = await fetch(`${API_URL}/contact`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+
+    if (!response.ok) {
+      throw new Error("Unable to send message")
+    }
+
     reset()
   }
 

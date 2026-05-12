@@ -6,7 +6,9 @@ import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { useI18n } from "@/lib/i18n-context"
+import { useAuth } from "@/lib/auth-context"
 import { LanguageSwitcher } from "./language-switcher"
+import { CartDrawer } from "./cart-drawer"
 import { cn } from "@/lib/utils"
 
 const navLinks = [
@@ -20,6 +22,7 @@ const navLinks = [
 
 export function Navbar() {
   const { t } = useI18n()
+  const { user, logout } = useAuth()
   const pathname = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -81,6 +84,28 @@ export function Navbar() {
         {/* Right side */}
         <div className="flex items-center gap-4">
           <LanguageSwitcher className={textColor} />
+          <CartDrawer className={textColor} />
+          {user ? (
+            <button
+              onClick={() => void logout()}
+              className={cn(
+                "hidden text-xs uppercase tracking-[0.2em] transition-colors sm:inline-flex",
+                textColor
+              )}
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              href="/auth/login"
+              className={cn(
+                "hidden text-xs uppercase tracking-[0.2em] transition-colors sm:inline-flex",
+                textColor
+              )}
+            >
+              Login
+            </Link>
+          )}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className={cn("lg:hidden transition-colors", textColor)}

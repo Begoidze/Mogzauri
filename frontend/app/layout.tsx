@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next"
 import { Inter, Playfair_Display } from "next/font/google"
 import { cookies } from "next/headers"
 import { I18nProvider } from "@/lib/i18n-context"
+import { AuthProvider } from "@/lib/auth-context"
 import { Cursor } from "@/components/cursor"
 import "./globals.css"
 
@@ -39,7 +40,9 @@ export default async function RootLayout({
   return (
     <html lang={lang} className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans antialiased">
-        <I18nProvider>{children}</I18nProvider>
+        <I18nProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </I18nProvider>
         <Cursor />
       </body>
     </html>

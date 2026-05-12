@@ -19,9 +19,6 @@ const registerSchema = z.object({
   phone: z.string().trim().min(5, "Phone is required"),
   password: z.string().min(8, "Password must be at least 8 characters"),
   address: optionalText,
-  city: optionalText,
-  country: optionalText,
-  postalCode: optionalText,
 })
 
 const loginSchema = z.object({
@@ -33,9 +30,6 @@ const updateProfileSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").optional(),
   phone: z.string().trim().min(5, "Phone is required").optional(),
   address: z.string().trim().min(1, "Address cannot be empty").nullable().optional(),
-  city: z.string().trim().min(1, "City cannot be empty").nullable().optional(),
-  country: z.string().trim().min(1, "Country cannot be empty").nullable().optional(),
-  postalCode: z.string().trim().min(1, "Postal code cannot be empty").nullable().optional(),
 })
 
 function setAuthCookie(reply: FastifyReply, token: string) {
@@ -69,9 +63,6 @@ const authRoutes: FastifyPluginAsync = async (app) => {
           name: body.name,
           phone: body.phone,
           address: body.address,
-          city: body.city,
-          country: body.country,
-          postalCode: body.postalCode,
         },
         select: userSelect,
       })

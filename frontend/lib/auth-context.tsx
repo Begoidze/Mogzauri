@@ -18,9 +18,6 @@ export interface CurrentUser {
   name: string
   phone: string
   address: string | null
-  city: string | null
-  country: string | null
-  postalCode: string | null
   role: "CUSTOMER" | "ADMIN"
   createdAt: string
   updatedAt: string
@@ -32,13 +29,10 @@ export interface RegisterInput {
   phone: string
   password: string
   address?: string
-  city?: string
-  country?: string
-  postalCode?: string
 }
 
 export type ProfileInput = Partial<
-  Pick<CurrentUser, "name" | "phone" | "address" | "city" | "country" | "postalCode">
+  Pick<CurrentUser, "name" | "phone" | "address">
 >
 
 interface AuthContextValue {

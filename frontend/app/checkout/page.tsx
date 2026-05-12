@@ -14,9 +14,6 @@ const shippingSchema = z.object({
   shippingName: z.string().trim().min(2, "Name is required"),
   shippingPhone: z.string().trim().min(5, "Phone is required"),
   shippingAddress: z.string().trim().min(3, "Address is required"),
-  shippingCity: z.string().trim().min(2, "City is required"),
-  shippingCountry: z.string().trim().min(2, "Country is required"),
-  shippingPostalCode: z.string().trim().min(2, "Postal code is required"),
 })
 
 type ShippingForm = z.infer<typeof shippingSchema>
@@ -25,9 +22,6 @@ const fields: Array<{ name: keyof ShippingForm; label: string }> = [
   { name: "shippingName", label: "Full Name" },
   { name: "shippingPhone", label: "Phone" },
   { name: "shippingAddress", label: "Address" },
-  { name: "shippingCity", label: "City" },
-  { name: "shippingCountry", label: "Country" },
-  { name: "shippingPostalCode", label: "Postal Code" },
 ]
 
 function CheckoutSkeleton() {
@@ -70,9 +64,6 @@ export default function CheckoutPage() {
       shippingName: user.name,
       shippingPhone: user.phone,
       shippingAddress: user.address ?? "",
-      shippingCity: user.city ?? "",
-      shippingCountry: user.country ?? "",
-      shippingPostalCode: user.postalCode ?? "",
     })
   }, [reset, user])
 

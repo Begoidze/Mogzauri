@@ -6,9 +6,6 @@ export interface AuthUser {
   name: string
   phone: string
   address: string | null
-  city: string | null
-  country: string | null
-  postalCode: string | null
   role: UserRole
   createdAt: Date
   updatedAt: Date

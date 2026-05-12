@@ -19,9 +19,6 @@ const registerSchema = z.object({
   phone: z.string().trim().min(5, "Phone is required"),
   password: z.string().min(8, "Password must be at least 8 characters"),
   address: optionalText,
-  city: optionalText,
-  country: optionalText,
-  postalCode: optionalText,
 })
 
 type RegisterForm = z.infer<typeof registerSchema>
@@ -32,9 +29,6 @@ const fields: Array<{ name: keyof RegisterForm; label: string; type?: string }> 
   { name: "phone", label: "Phone" },
   { name: "password", label: "Password", type: "password" },
   { name: "address", label: "Address" },
-  { name: "city", label: "City" },
-  { name: "country", label: "Country" },
-  { name: "postalCode", label: "Postal Code" },
 ]
 
 export default function RegisterPage() {

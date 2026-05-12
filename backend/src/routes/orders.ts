@@ -12,9 +12,6 @@ const createOrderSchema = z.object({
   shippingName: z.string().trim().min(2, "Shipping name is required"),
   shippingPhone: z.string().trim().min(5, "Shipping phone is required"),
   shippingAddress: z.string().trim().min(3, "Shipping address is required"),
-  shippingCity: z.string().trim().min(2, "Shipping city is required"),
-  shippingCountry: z.string().trim().min(2, "Shipping country is required"),
-  shippingPostalCode: z.string().trim().min(2, "Shipping postal code is required"),
 })
 
 function getStripeClient() {
@@ -92,9 +89,6 @@ const orderRoutes: FastifyPluginAsync = async (app) => {
             shippingName: body.shippingName,
             shippingPhone: body.shippingPhone,
             shippingAddress: body.shippingAddress,
-            shippingCity: body.shippingCity,
-            shippingCountry: body.shippingCountry,
-            shippingPostalCode: body.shippingPostalCode,
             items: {
               create: cartItems.map((item) => ({
                 productId: item.productId,

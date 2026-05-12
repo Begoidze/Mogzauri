@@ -27,9 +27,9 @@ export default function WinesPage() {
         <section className="mx-auto max-w-7xl px-6 py-24">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {Array.isArray(wines) &&
-              wines.map((wine, i) => (
+              wines.map((wine) => (
                 <WineCard
-                  key={i}
+                  key={wine.name}
                   name={wine.name}
                   year={wine.year}
                   description={wine.description}

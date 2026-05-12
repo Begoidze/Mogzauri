@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react"
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react"
 import en from "@/locales/en.json"
 import ka from "@/locales/ka.json"
 
@@ -31,6 +31,10 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     const saved = localStorage.getItem("mogzauri-locale")
     return saved === "en" || saved === "ka" ? saved : "en"
   })
+
+  useEffect(() => {
+    document.cookie = `mogzauri-locale=${locale}; path=/; max-age=31536000; SameSite=Lax`
+  }, [locale])
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale)

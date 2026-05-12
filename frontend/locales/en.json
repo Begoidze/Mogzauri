@@ -78,39 +78,7 @@
   "shop": {
     "pageTitle": "Shop",
     "pageSubtitle": "",
-    "addToCart": "Coming Soon",
-    "products": [
-      {
-        "name": "Wine wine wine 2023",
-        "description": "Description Description Description Description Description Description",
-        "price": "$XX"
-      },
-      {
-        "name": "Wine wine wine 2023",
-        "description": "Description Description Description Description Description Description",
-        "price": "$XX"
-      },
-      {
-        "name": "Goruli Mtsvane",
-        "description": "White dry wine, made from Goruli Mtsvane grape variety. The wine is fermented using classic white technology, only from the juice obtained by gentle pressing, in stainless steel tanks. It is characterized by light straw color, citrus and fresh stone fruit aromas, fresh and harmonious taste",
-        "price": "$XX"
-      },
-      {
-        "name": "Wine wine wine 2023",
-        "description": "Description Description Description Description Description Description",
-        "price": "$XX"
-      },
-      {
-        "name": "Wine wine wine 2023",
-        "description": "Description Description Description Description Description Description",
-        "price": "$XX"
-      },
-      {
-        "name": "Wine wine wine 2023",
-        "description": "Description Description Description Description Description Description",
-        "price": "$XX"
-      }
-    ]
+    "comingSoon": "Products coming soon"
   },
   "visit": {
     "pageTitle": "Visit Us",
@@ -140,11 +108,17 @@
     "messageLabel": "Message",
     "messagePlaceholder": "Tell us how we can help...",
     "send": "Send Message",
+    "successMessage": "Your message has been sent. We will be in touch soon.",
     "info": "Get in Touch",
     "phone": "+995 555 123 456",
     "email": "info@mogzauri.ge",
     "addressLabel": "Address",
-    "address": "Kakheti Region, Arkhiloskalo, Georgia"
+    "address": "Kakheti Region, Arkhiloskalo, Georgia",
+    "validation": {
+      "nameMin": "Name must be at least 2 characters",
+      "emailInvalid": "Please enter a valid email address",
+      "messageMin": "Message must be at least 10 characters"
+    }
   },
   "footer": {
     "tagline": "Crafting exceptional wines in the heart of Georgia since 2023.",

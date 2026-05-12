@@ -31,7 +31,7 @@ export function WineCard({ name, year, description, price }: WineCardProps) {
         </div>
         <p className="flex-1 text-sm leading-relaxed text-muted-foreground">{description}</p>
         <div className="flex items-center justify-between pt-2">
-          <span className="font-serif text-lg font-semibold text-foreground">{"$"}{price}</span>
+          <span className="font-serif text-lg font-semibold text-foreground">{price}</span>
           <button className="border border-foreground px-4 py-2 text-xs uppercase tracking-[0.15em] text-foreground transition-colors duration-200 hover:bg-foreground hover:text-background">
             {t("wines.learnMore") as string}
           </button>

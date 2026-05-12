@@ -1,6 +1,7 @@
 import React from "react"
 import type { Metadata, Viewport } from "next"
 import { Inter, Playfair_Display } from "next/font/google"
+import { cookies } from "next/headers"
 import { I18nProvider } from "@/lib/i18n-context"
 import { Cursor } from "@/components/cursor"
 import "./globals.css"
@@ -27,13 +28,16 @@ export const viewport: Viewport = {
   initialScale: 1,
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const cookieStore = await cookies()
+  const lang = cookieStore.get("mogzauri-locale")?.value === "ka" ? "ka" : "en"
+
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang={lang} className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans antialiased">
         <I18nProvider>{children}</I18nProvider>
         <Cursor />

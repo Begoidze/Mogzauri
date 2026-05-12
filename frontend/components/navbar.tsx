@@ -93,7 +93,7 @@ export function Navbar() {
                 textColor
               )}
             >
-              Logout
+              {t("auth.logout") as string}
             </button>
           ) : (
             <Link
@@ -103,7 +103,7 @@ export function Navbar() {
                 textColor
               )}
             >
-              Login
+              {t("auth.login.nav") as string}
             </Link>
           )}
           <button

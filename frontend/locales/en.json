@@ -80,6 +80,63 @@
     "pageSubtitle": "",
     "comingSoon": "Products coming soon"
   },
+  "auth": {
+    "account": "Account",
+    "logout": "Logout",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "password": "Password",
+      "address": "Address"
+    },
+    "login": {
+      "nav": "Login",
+      "title": "Sign In",
+      "submit": "Sign In",
+      "error": "Login failed",
+      "registerPrompt": "New to Mogzauri?",
+      "registerLink": "Create an account"
+    },
+    "register": {
+      "title": "Create Account",
+      "submit": "Register",
+      "error": "Registration failed",
+      "loginPrompt": "Already have an account?",
+      "loginLink": "Sign in"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "emailInvalid": "Enter a valid email address",
+      "phoneRequired": "Phone is required",
+      "passwordRequired": "Password is required",
+      "passwordMin": "Password must be at least 8 characters"
+    }
+  },
+  "cart": {
+    "open": "Open cart",
+    "title": "Cart",
+    "empty": "Your cart is empty.",
+    "quantity": "Qty",
+    "total": "Total",
+    "checkout": "Checkout"
+  },
+  "checkout": {
+    "eyebrow": "Checkout",
+    "title": "Shipping Address",
+    "submit": "Proceed to Payment",
+    "error": "Unable to create order",
+    "fields": {
+      "name": "Full Name",
+      "phone": "Phone",
+      "address": "Address"
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "phoneRequired": "Phone is required",
+      "addressRequired": "Address is required"
+    }
+  },
   "visit": {
     "pageTitle": "Visit Us",
     "pageSubtitle": "Experience the beauty of Georgian winemaking firsthand",

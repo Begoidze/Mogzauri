@@ -80,6 +80,63 @@
     "pageSubtitle": "",
     "comingSoon": "პროდუქტები მალე გამოჩნდება"
   },
+  "auth": {
+    "account": "ანგარიში",
+    "logout": "გასვლა",
+    "fields": {
+      "name": "სახელი",
+      "email": "ელ. ფოსტა",
+      "phone": "ტელეფონი",
+      "password": "პაროლი",
+      "address": "მისამართი"
+    },
+    "login": {
+      "nav": "შესვლა",
+      "title": "შესვლა",
+      "submit": "შესვლა",
+      "error": "შესვლა ვერ მოხერხდა",
+      "registerPrompt": "ახალი ხართ Mogzauri-ში?",
+      "registerLink": "ანგარიშის შექმნა"
+    },
+    "register": {
+      "title": "ანგარიშის შექმნა",
+      "submit": "რეგისტრაცია",
+      "error": "რეგისტრაცია ვერ მოხერხდა",
+      "loginPrompt": "უკვე გაქვთ ანგარიში?",
+      "loginLink": "შესვლა"
+    },
+    "validation": {
+      "nameRequired": "სახელი სავალდებულოა",
+      "emailInvalid": "შეიყვანეთ სწორი ელ. ფოსტა",
+      "phoneRequired": "ტელეფონი სავალდებულოა",
+      "passwordRequired": "პაროლი სავალდებულოა",
+      "passwordMin": "პაროლი უნდა შეიცავდეს მინიმუმ 8 სიმბოლოს"
+    }
+  },
+  "cart": {
+    "open": "კალათის გახსნა",
+    "title": "კალათა",
+    "empty": "თქვენი კალათა ცარიელია.",
+    "quantity": "რაოდენობა",
+    "total": "ჯამი",
+    "checkout": "გადახდა"
+  },
+  "checkout": {
+    "eyebrow": "გადახდა",
+    "title": "მიწოდების მისამართი",
+    "submit": "გადახდაზე გადასვლა",
+    "error": "შეკვეთის შექმნა ვერ მოხერხდა",
+    "fields": {
+      "name": "სრული სახელი",
+      "phone": "ტელეფონი",
+      "address": "მისამართი"
+    },
+    "validation": {
+      "nameRequired": "სახელი სავალდებულოა",
+      "phoneRequired": "ტელეფონი სავალდებულოა",
+      "addressRequired": "მისამართი სავალდებულოა"
+    }
+  },
   "visit": {
     "pageTitle": "გვესტუმრეთ",
     "pageSubtitle": "განიცადეთ ქართული მეღვინეობის სილამაზე პირადად",

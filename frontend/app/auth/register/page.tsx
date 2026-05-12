@@ -10,37 +10,47 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useAuth } from "@/lib/auth-context"
+import { useI18n } from "@/lib/i18n-context"
 
 const optionalText = z.string().trim().optional()
 
-const registerSchema = z.object({
-  name: z.string().trim().min(2, "Name is required"),
-  email: z.string().trim().email("Enter a valid email address"),
-  phone: z.string().trim().min(5, "Phone is required"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  address: optionalText,
-})
+function buildRegisterSchema(t: (key: string) => unknown) {
+  return z.object({
+    name: z.string().trim().min(2, t("auth.validation.nameRequired") as string),
+    email: z.string().trim().email(t("auth.validation.emailInvalid") as string),
+    phone: z.string().trim().min(5, t("auth.validation.phoneRequired") as string),
+    password: z.string().min(8, t("auth.validation.passwordMin") as string),
+    address: optionalText,
+  })
+}
 
-type RegisterForm = z.infer<typeof registerSchema>
+type RegisterForm = {
+  name: string
+  email: string
+  phone: string
+  password: string
+  address?: string
+}
 
-const fields: Array<{ name: keyof RegisterForm; label: string; type?: string }> = [
-  { name: "name", label: "Name" },
-  { name: "email", label: "Email", type: "email" },
-  { name: "phone", label: "Phone" },
-  { name: "password", label: "Password", type: "password" },
-  { name: "address", label: "Address" },
+const fields: Array<{ name: keyof RegisterForm; labelKey: string; type?: string }> = [
+  { name: "name", labelKey: "auth.fields.name" },
+  { name: "email", labelKey: "auth.fields.email", type: "email" },
+  { name: "phone", labelKey: "auth.fields.phone" },
+  { name: "password", labelKey: "auth.fields.password", type: "password" },
+  { name: "address", labelKey: "auth.fields.address" },
 ]
 
 export default function RegisterPage() {
   const router = useRouter()
   const { register: registerUser } = useAuth()
+  const { t } = useI18n()
   const [formError, setFormError] = useState<string | null>(null)
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<RegisterForm>({
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(buildRegisterSchema(t)),
   })
 
   const onSubmit = async (data: RegisterForm) => {
@@ -49,7 +59,7 @@ export default function RegisterPage() {
       await registerUser(data)
       router.push("/")
     } catch (error) {
-      setFormError(error instanceof Error ? error.message : "Registration failed")
+      setFormError(error instanceof Error ? error.message : (t("auth.register.error") as string))
     }
   }
 
@@ -58,8 +68,12 @@ export default function RegisterPage() {
       <Navbar />
       <main className="mx-auto max-w-2xl px-6 py-36">
         <div className="mb-10">
-          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Account</p>
-          <h1 className="mt-3 font-serif text-4xl font-semibold text-foreground">Create Account</h1>
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+            {t("auth.account") as string}
+          </p>
+          <h1 className="mt-3 font-serif text-4xl font-semibold text-foreground">
+            {t("auth.register.title") as string}
+          </h1>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} noValidate className="grid gap-5 sm:grid-cols-2">
@@ -68,7 +82,7 @@ export default function RegisterPage() {
               key={field.name}
               className="flex flex-col gap-2 text-xs uppercase tracking-[0.15em] text-muted-foreground"
             >
-              {field.label}
+              {t(field.labelKey) as string}
               <input
                 {...register(field.name)}
                 type={field.type ?? "text"}
@@ -93,16 +107,16 @@ export default function RegisterPage() {
                 type="submit"
                 className="w-full border border-foreground bg-foreground px-8 py-3 text-xs uppercase tracking-[0.2em] text-background transition-colors hover:bg-transparent hover:text-foreground"
               >
-                Register
+                {t("auth.register.submit") as string}
               </button>
             )}
           </div>
         </form>
 
         <p className="mt-6 text-sm text-muted-foreground">
-          Already have an account?{" "}
+          {t("auth.register.loginPrompt") as string}{" "}
           <Link href="/auth/login" className="text-foreground underline underline-offset-4">
-            Sign in
+            {t("auth.register.loginLink") as string}
           </Link>
         </p>
       </main>

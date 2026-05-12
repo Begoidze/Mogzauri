@@ -9,19 +9,26 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { Skeleton } from "@/components/ui/skeleton"
 import { API_URL, useAuth } from "@/lib/auth-context"
+import { useI18n } from "@/lib/i18n-context"
 
-const shippingSchema = z.object({
-  shippingName: z.string().trim().min(2, "Name is required"),
-  shippingPhone: z.string().trim().min(5, "Phone is required"),
-  shippingAddress: z.string().trim().min(3, "Address is required"),
-})
+function buildShippingSchema(t: (key: string) => unknown) {
+  return z.object({
+    shippingName: z.string().trim().min(2, t("checkout.validation.nameRequired") as string),
+    shippingPhone: z.string().trim().min(5, t("checkout.validation.phoneRequired") as string),
+    shippingAddress: z.string().trim().min(3, t("checkout.validation.addressRequired") as string),
+  })
+}
 
-type ShippingForm = z.infer<typeof shippingSchema>
+type ShippingForm = {
+  shippingName: string
+  shippingPhone: string
+  shippingAddress: string
+}
 
-const fields: Array<{ name: keyof ShippingForm; label: string }> = [
-  { name: "shippingName", label: "Full Name" },
-  { name: "shippingPhone", label: "Phone" },
-  { name: "shippingAddress", label: "Address" },
+const fields: Array<{ name: keyof ShippingForm; labelKey: string }> = [
+  { name: "shippingName", labelKey: "checkout.fields.name" },
+  { name: "shippingPhone", labelKey: "checkout.fields.phone" },
+  { name: "shippingAddress", labelKey: "checkout.fields.address" },
 ]
 
 function CheckoutSkeleton() {
@@ -41,6 +48,7 @@ function CheckoutSkeleton() {
 export default function CheckoutPage() {
   const router = useRouter()
   const { user, isLoading } = useAuth()
+  const { t } = useI18n()
   const [formError, setFormError] = useState<string | null>(null)
   const {
     register,
@@ -48,7 +56,7 @@ export default function CheckoutPage() {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<ShippingForm>({
-    resolver: zodResolver(shippingSchema),
+    resolver: zodResolver(buildShippingSchema(t)),
   })
 
   useEffect(() => {
@@ -79,13 +87,13 @@ export default function CheckoutPage() {
 
       if (!response.ok) {
         const payload = (await response.json().catch(() => null)) as { error?: string } | null
-        throw new Error(payload?.error ?? "Unable to create order")
+        throw new Error(payload?.error ?? (t("checkout.error") as string))
       }
 
       await response.json()
       router.push("/shop")
     } catch (error) {
-      setFormError(error instanceof Error ? error.message : "Unable to create order")
+      setFormError(error instanceof Error ? error.message : (t("checkout.error") as string))
     }
   }
 
@@ -94,8 +102,12 @@ export default function CheckoutPage() {
       <Navbar />
       <main className="mx-auto max-w-2xl px-6 py-36">
         <div className="mb-10">
-          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Checkout</p>
-          <h1 className="mt-3 font-serif text-4xl font-semibold text-foreground">Shipping Address</h1>
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+            {t("checkout.eyebrow") as string}
+          </p>
+          <h1 className="mt-3 font-serif text-4xl font-semibold text-foreground">
+            {t("checkout.title") as string}
+          </h1>
         </div>
 
         {isLoading ? (
@@ -107,7 +119,7 @@ export default function CheckoutPage() {
                 key={field.name}
                 className="flex flex-col gap-2 text-xs uppercase tracking-[0.15em] text-muted-foreground"
               >
-                {field.label}
+                {t(field.labelKey) as string}
                 <input
                   {...register(field.name)}
                   className="border border-border bg-transparent px-4 py-3 text-sm normal-case tracking-normal text-foreground outline-none transition-colors focus:border-foreground"
@@ -131,7 +143,7 @@ export default function CheckoutPage() {
                   type="submit"
                   className="w-full border border-foreground bg-foreground px-8 py-3 text-xs uppercase tracking-[0.2em] text-background transition-colors hover:bg-transparent hover:text-foreground"
                 >
-                  Proceed to Payment
+                  {t("checkout.submit") as string}
                 </button>
               )}
             </div>

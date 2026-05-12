@@ -54,7 +54,7 @@ function CartSkeleton() {
 }
 
 export function CartDrawer({ className }: { className?: string }) {
-  const { locale } = useI18n()
+  const { locale, t } = useI18n()
   const [open, setOpen] = useState(false)
   const [items, setItems] = useState<CartItem[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -88,20 +88,20 @@ export function CartDrawer({ className }: { className?: string }) {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger
         className={cn("transition-colors", className)}
-        aria-label="Open cart"
+        aria-label={t("cart.open") as string}
       >
         <ShoppingBag size={20} />
       </SheetTrigger>
       <SheetContent className="flex w-full flex-col sm:max-w-md">
         <SheetHeader>
-          <SheetTitle className="font-serif text-2xl">Cart</SheetTitle>
+          <SheetTitle className="font-serif text-2xl">{t("cart.title") as string}</SheetTitle>
         </SheetHeader>
 
         <div className="flex-1 overflow-y-auto py-6">
           {isLoading ? (
             <CartSkeleton />
           ) : items.length === 0 ? (
-            <p className="text-sm text-muted-foreground">Your cart is empty.</p>
+            <p className="text-sm text-muted-foreground">{t("cart.empty") as string}</p>
           ) : (
             <div className="flex flex-col gap-5">
               {items.map((item) => (
@@ -112,7 +112,9 @@ export function CartDrawer({ className }: { className?: string }) {
                       <p className="font-serif text-base text-foreground">
                         {locale === "ka" ? item.product.nameKa : item.product.name}
                       </p>
-                      <p className="text-sm text-muted-foreground">Qty {item.quantity}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {t("cart.quantity") as string} {item.quantity}
+                      </p>
                     </div>
                     <p className="text-sm font-medium text-foreground">
                       {formatPrice(item.product.price * item.quantity)}
@@ -126,14 +128,14 @@ export function CartDrawer({ className }: { className?: string }) {
 
         <div className="border-t border-border pt-5">
           <div className="mb-5 flex items-center justify-between font-serif text-lg">
-            <span>Total</span>
+            <span>{t("cart.total") as string}</span>
             <span>{formatPrice(total)}</span>
           </div>
           <Link
             href="/checkout"
             className="block border border-foreground bg-foreground px-6 py-3 text-center text-xs uppercase tracking-[0.2em] text-background transition-colors hover:bg-transparent hover:text-foreground"
           >
-            Checkout
+            {t("cart.checkout") as string}
           </Link>
         </div>
       </SheetContent>

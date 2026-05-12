@@ -12,7 +12,9 @@ import { API_URL } from "@/lib/auth-context"
 interface Product {
   id: string
   name: string
+  nameKa: string
   description: string
+  descriptionKa: string
   price: number
   image: string | null
 }
@@ -42,7 +44,7 @@ function ProductCardSkeleton() {
 }
 
 export default function ShopPage() {
-  const { t } = useI18n()
+  const { locale, t } = useI18n()
   const [products, setProducts] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
@@ -88,8 +90,8 @@ export default function ShopPage() {
               {products.map((product) => (
                 <ProductCard
                   key={product.id}
-                  name={product.name}
-                  description={product.description}
+                  name={locale === "ka" ? product.nameKa : product.name}
+                  description={locale === "ka" ? product.descriptionKa : product.description}
                   price={formatPrice(product.price)}
                   image={product.image ?? undefined}
                 />

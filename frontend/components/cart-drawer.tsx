@@ -12,11 +12,13 @@ import {
 } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
 import { API_URL } from "@/lib/auth-context"
+import { useI18n } from "@/lib/i18n-context"
 import { cn } from "@/lib/utils"
 
 interface CartProduct {
   id: string
   name: string
+  nameKa: string
   price: number
   image: string | null
 }
@@ -52,6 +54,7 @@ function CartSkeleton() {
 }
 
 export function CartDrawer({ className }: { className?: string }) {
+  const { locale } = useI18n()
   const [open, setOpen] = useState(false)
   const [items, setItems] = useState<CartItem[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -106,7 +109,9 @@ export function CartDrawer({ className }: { className?: string }) {
                   <div className="h-20 w-20 shrink-0 bg-secondary" />
                   <div className="flex flex-1 flex-col justify-between">
                     <div>
-                      <p className="font-serif text-base text-foreground">{item.product.name}</p>
+                      <p className="font-serif text-base text-foreground">
+                        {locale === "ka" ? item.product.nameKa : item.product.name}
+                      </p>
                       <p className="text-sm text-muted-foreground">Qty {item.quantity}</p>
                     </div>
                     <p className="text-sm font-medium text-foreground">
